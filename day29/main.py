@@ -1,6 +1,6 @@
 import random
 from tkinter import *
-
+import pyperclip
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
@@ -14,10 +14,11 @@ ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'
 
 # generate pass and save it to a text
 def generate_password():
-    password = []
-    for _ in range(10):
-        new_pass = random.choice(ALPHABET)
-        password.append(new_pass)
+    password = [random.choice(ALPHABET) for _ in range(10)]
+    # password = []
+    # for _ in range(10):
+    #     new_pass = random.choice(ALPHABET)
+    #     password.append(new_pass)
     text = "".join(password)
     password_text.config(state="normal")
     password_text.insert(INSERT, text)
@@ -26,6 +27,8 @@ def generate_password():
     with open("password.txt", "a") as pf:
         pf.write(f"{account}: {text} \n")
     success_window()
+    # 将密码 复制到剪贴板中
+    pyperclip.copy(text)
 
 
 def success_window():
@@ -62,10 +65,10 @@ canvas.grid(column=1, row=1)
 account_label = Label(text="Account:", font=(FONT_NAME, 15, "bold"), fg="black")
 account_label.grid(column=0, row=2)
 
-account_entry = Entry(width=30)
+account_entry = Entry(width=40)
 account_entry.insert(0, "example@example.com")
 account_entry.bind("<Button-1>", on_click)
-account_entry.grid(column=1, row=2)
+account_entry.grid(column=1, row=2, columnspan=2)
 
 password_label = Label(text="Password:", font=(FONT_NAME, 15, "bold"), fg="black")
 password_label.grid(column=0, row=3)
@@ -73,9 +76,9 @@ password_label.grid(column=0, row=3)
 password_text = Text(width=30, height=1, state="disabled")
 password_text.grid(column=1, row=3)
 
-generator_button = Button(text="Generator", fg=RED, font=(FONT_NAME, 15, "bold"), command=generate_password)
+generator_button = Button(text="Generator", fg=RED, font=(FONT_NAME, 10, "bold"), command=generate_password)
 generator_button.grid(column=2, row=3)
 
-generator_button = Button(text="Clear", fg=RED, font=(FONT_NAME, 15, "bold"), command=clear)
-generator_button.grid(column=2, row=4)
+generator_button = Button(text="Clear", fg=RED, font=(FONT_NAME, 10, "bold"), command=clear, width=35)
+generator_button.grid(column=1, row=4, columnspan=2)
 window.mainloop()
