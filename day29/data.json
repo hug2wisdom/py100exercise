@@ -1,0 +1,18 @@
+{
+    "paypal": {
+        "email": "example@example.com",
+        "password": "$YO18dH*EF"
+    },
+    "chime": {
+        "email": "example@example.com",
+        "password": "08FQ!0t50Y"
+    },
+    "gmail": {
+        "email": "jclwan5200@gmail",
+        "password": "YjK8uMm&7o"
+    },
+    "microsoft": {
+        "email": "bigdavidchen",
+        "password": "d@Z@b2f@eQ"
+    }
+}
