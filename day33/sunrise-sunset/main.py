@@ -6,7 +6,7 @@ MY_LNG = 33.501443
 parameter = {
     "lat": MY_LAT,
     "lng": MY_LNG,
-    "formatted": 1,
+    "formatted": 0,
 }
 
 response = requests.get(url="https://api.sunrise-sunset.org/json", params=parameter)
