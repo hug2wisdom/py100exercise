@@ -4,7 +4,7 @@ from tkinter import *
 import requests
 
 correct_answer = None
-
+score = 0
 
 def get_question():
     global correct_answer
@@ -19,23 +19,29 @@ def get_question():
     canvas.itemconfig(show_image, image=card_front)
 
 
-def is_true():
-    answer = "True"
+def check_answer(answer):
+
+    global timer, score
+    window.after_cancel(timer)
     if answer == correct_answer:
         canvas.itemconfig(show_image, image=card_back_right)
+        score += 1
+        canvas.itemconfig(score_board, text=f"Score: {score}")
     else:
         canvas.itemconfig(show_image, image=card_back_wrong)
     # get_question()
+    #
+    timer = window.after(3000, get_question)
+
+
+def is_true():
+    answer = "True"
+    check_answer(answer)
 
 
 def is_false():
     answer = "False"
-    if answer == correct_answer:
-        canvas.itemconfig(show_image, image=card_back_right)
-    else:
-        canvas.itemconfig(show_image, image=card_back_wrong)
-    # get_question()
-
+    check_answer(answer)
 
 # set the game UI
 window = Tk()
@@ -50,7 +56,7 @@ card_back_right = PhotoImage(file="images/card_back_right.png")
 card_back_wrong = PhotoImage(file="images/card_back_wrong.png")
 show_image = canvas.create_image(400, 263, image=card_front)
 # set the score
-canvas.create_text(400, 50, text="Score: 0, Highest Score: 0", font=("Arial", 15, "bold"))
+score_board = canvas.create_text(400, 50, text="Score: 0, Highest Score: 0", font=("Arial", 15, "bold"))
 # set the text of question
 questions_asked = canvas.create_text(400, 130, text="The questions will be here", width=600, font=("Arial", 20, "bold"))
 canvas.grid(row=0, column=0, columnspan=2)
@@ -63,5 +69,5 @@ right = Button(image=right_choice, highlightthickness=0, command=is_true)
 wrong.grid(row=1, column=0)
 right.grid(row=1, column=1)
 
-get_question()
+timer = window.after(3000, get_question)
 window.mainloop()
